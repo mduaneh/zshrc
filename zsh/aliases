@@ -1,0 +1,46 @@
+#debug "Setting aliases"
+# Common Aliases
+alias mx='chmod a+x'
+alias ll='ls -rthl'
+alias perlsh='perl -d -e "42;"'
+alias rcd='cd `pwd -P`'
+alias hist='history 50'
+alias ghist='history | grep '
+alias scp='BINARY_SSH=scp ~/bashrc/ssh-ident'
+
+OSNAME=${OSNAME:-`uname`}
+if [[ $OSNAME == "Linux" ]] || [[ $OSNAME == "SunOS" ]] ; then
+	alias ct='cleartool'
+	alias checkSpace='du -ch --max-depth=1 --exclude=.snapshot | sort -h -r '
+	alias checkHome='checkSpace; /pkg/icetools/bin/quota.eng -u mhale -d /usr2/mhale'
+	alias aklog='/pkg/afs/tools/aklog/aklog.sled11sp3'
+	alias cdgit='cd ~/projectPaths/mhale/git'
+	alias cdtrace='cd /prj/qct/wire_trace'
+	alias sudo='env TERM=screen-256color /usr/bin/sudo'
+	alias become='env TERM=screen-256color sudo su - -s /bin/bash '
+	alias becomec="env TERM=screen-256color sudo su - -s /bin/tcsh "
+	alias rE="stty erase "
+	alias bjobsnc='env LSFBINARY_NOCACHE=1 bjobs'
+	alias clean="perl -p -e 's/[^\S\x0a\x0d]//g;'"
+	alias pkg_aarch64='cd /afs/.localcell/cm.dev/GV2/sysname/pkg.aarch64_linux26'
+ else # ELSE Probably macOS
+	alias vpnAus='sudo openconnect --protocol=anyconnect --authgroup=employee --user=mhale  ngvpn03.nvidia.com'
+	alias cdgit='cd ~/Documents/OneDrive\ -\ NVIDIA\ Corporation/GitHub/'
+	alias csv2markup="perl -p -e 's/^/|/; s/,/|/g; s/$/|/; s/\|/||/g if $. == 1;'"
+	alias readelf=greadelf
+	alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES;killall Finder /System/Library/CoreServices/Finder.app'
+	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+	alias dash='open dash://\!*'
+	alias rtmux='echo -n -e "\033]0;rtmux\007"; ssh vl-mhale-rtp.qualcomm.com -t /pkg/qct/software/gnu/tmux/1.9a/bin/tmux new-session -A -s RTP; echo -n -e "\033]0;bash\007"'
+	alias gtmux='echo -n -e "\033]0;gtmux\007"; ssh vl-mhale-gbc.qualcomm.com -t /pkg/qct/software/gnu/tmux/1.9a/bin/tmux new-session -A -s GBC; echo -n -e "\033]0;bash\007"'
+	alias etmux='echo -n -e "\033]0;etmux\007"; ssh vl-mhale-ecdca.qualcomm.com -t env TERMINFO=/usr/share/terminfo /pkg/qct/software/gnu/tmux/1.9a/bin/tmux new-session -A -s ECDCA; echo -n -e "\033]0;bash\007"'
+	alias htmux='echo -n -e "\033]0;Home-tmux\007"; cd ~/bin/mhale.home && ./mhale -t tmux a ;echo -n -e "\033]0;bash\007" '
+	alias clean="pbpaste | perl -p -e 's/[[:^print:]]//g; s/\s+//g;' | pbcopy "
+	alias qclean="pbpaste | perl -p -e 's/[[:^print:]]//g; s/\s+//g; s/\|//g;' | pbcopy "
+	alias qcleans='pbpaste | perl -p -e '\''s/[[:^print:]]//g; s/\s+/ /g; s/\|//g;'\'' | pbcopy '
+	alias rehash='hash -r'
+	alias ls='ls -G'
+	alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO;  killall Finder /System/Library/CoreServices/Finder.app'
+fi
+#debug "Done with aliases"
